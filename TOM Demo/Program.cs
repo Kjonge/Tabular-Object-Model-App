@@ -44,7 +44,7 @@ namespace TOM_Demo
                 DataSource = foodmartDataSource,
                 Query = @"SELECT [Datekey]
                                 ,[FullDateLabel]
-                                FROM [AzureDemo].[dbo].[DimDate]",
+                                FROM [dbo].[DimDate]",
             };
             m.Tables.Add(dateTable);                                          //Add the datatable to the model
             dateTable.Columns.Add(new DataColumn()                            //Add the columns
