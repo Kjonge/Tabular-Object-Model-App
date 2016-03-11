@@ -1,6 +1,7 @@
 ﻿using Microsoft.AnalysisServices.Tabular;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,35 @@ namespace TOM_Demo
     {
         static void Main(string[] args)
         {
-            CreateAndRefreshModel();
+            //CreateAndRefreshModel();
+            GenerateDatabaseSchema("c:\\temp\\file.json");
             Console.ReadLine();
+        }
+
+        public static void GenerateDatabaseSchema(string filename)
+        {
+            //Ignore some properties that are not needed for editing.
+            SerializeOptions SSDTSerializeOptions = new SerializeOptions()
+            {
+                IgnoreInferredObjects = true,
+                IgnoreInferredProperties = true,
+                IgnoreTimestamps = true,
+                SplitMultilineStrings = true
+            };
+
+            string schemafile = JsonSerializer.GenerateSchema(typeof (Database), SSDTSerializeOptions);
+            try
+            {
+                using (StreamWriter file = File.CreateText(filename))
+                {
+                    file.Write(schemafile);
+                    Console.WriteLine("File written to disk.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: Could not save the file to disk. Original error: " + ex.Message);
+            }
         }
 
         public static void CreateAndRefreshModel()
