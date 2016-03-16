@@ -45,7 +45,8 @@ namespace TOM_Demo
 
         public static void CreateAndRefreshModel()
         {
-            string serverConnectionString = @"Provider=MSOLAP;Data Source=.";
+            string ASserver = @".";
+            string serverConnectionString = string.Format("Provider=MSOLAP;Data Source={0}",ASserver);
             var server = new Server();
             server.Connect(serverConnectionString);                           //Connect to the server.
 
@@ -54,11 +55,18 @@ namespace TOM_Demo
             Model m = new Model();                                            //Create a new model
             Db.Model = m;                                                     //Add it to the database
 
+            string datasource = @"localhost";
+            string catalog = @"CATALOG";
+            string connectionstring =
+                string.Format(
+                    "Provider=SQLNCLI11; Data Source ={0}; Initial Catalog={1}; Integrated Security = SSPI; Persist Security Info = false"
+                    , datasource
+                    , catalog);
             //Add a datasource connection
             ProviderDataSource foodmartDataSource = new ProviderDataSource()
             {
                 Name = "Demo sales",
-                ConnectionString = "Provider=SERVERNAME;Data Source=.;Initial Catalog=CATALOG;Integrated Security=SSPI;Persist Security Info=false",
+                ConnectionString = connectionstring,
                 ImpersonationMode = ImpersonationMode.ImpersonateServiceAccount,
             };
             m.DataSources.Add(foodmartDataSource);
