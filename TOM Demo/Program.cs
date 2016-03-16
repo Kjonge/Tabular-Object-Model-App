@@ -12,8 +12,8 @@ namespace TOM_Demo
     {
         static void Main(string[] args)
         {
-            //CreateAndRefreshModel();
-            GenerateDatabaseSchema("c:\\temp\\file.json");
+            CreateAndRefreshModel();
+            //GenerateDatabaseSchema("c:\\temp\\file.json");
             Console.ReadLine();
         }
 
@@ -50,7 +50,7 @@ namespace TOM_Demo
             server.Connect(serverConnectionString);                           //Connect to the server.
 
             Database Db = new Database("TOM demo");                           //Create a new DB
-            server.Databases.Add(Db);                                         //Add it to the server
+            server.Databases.Add(Db);                                           //Add it to the server
             Model m = new Model();                                            //Create a new model
             Db.Model = m;                                                     //Add it to the database
 
